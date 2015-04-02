@@ -1,8 +1,10 @@
 import {randInt} from './utils';
 
+const diceSpecRe = /^(\d+)?d(\d+)([+-](\d+))?$/;
+
 export function parse(spec) {
-  let parts = /^(\d+)?d(\d+)([+-](\d+))?/.exec(spec);
-  let [_, count, dieSize, add] = parts.map((s) => parseInt(s));
+  let parts = spec.match(diceSpecRe);
+  let [count, dieSize, add] = parts.slice(1).map((s) => parseInt(s));
   if (isNaN(count)) {
     count = 1;
   }
@@ -10,6 +12,10 @@ export function parse(spec) {
     add = 0;
   }
   return {count, dieSize, add};
+}
+
+export function isValid(spec) {
+  return spec.match(diceSpecRe) !== null;
 }
 
 export function roll(spec) {

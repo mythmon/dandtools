@@ -1,5 +1,5 @@
 import {expect} from 'chai';
-import {parse, roll} from '../src/dice';
+import {parse, roll, isValid} from '../src/dice';
 
 describe('dice', () => {
   describe('parse', () => {
@@ -42,6 +42,20 @@ describe('dice', () => {
         found[roll('1d4-1')] = true;
       }
       expect(found).to.deep.equal([true, true, true, true]);
+    });
+  });
+
+  describe('isValid', () => {
+    it('should validate 1d6+2', () => {
+      expect(isValid('1d6+2')).to.equal(true);
+    });
+
+    it('should not validate 1d+2', () => {
+      expect(isValid('1d+2')).to.equal(false);
+    });
+
+    it('should not validate asdf', () => {
+      expect(isValid('asdf')).to.equal(false);
     });
   });
 });
