@@ -4,19 +4,23 @@ import {parse, roll, isValid} from '../src/dice';
 describe('dice', () => {
   describe('parse', () => {
     it('should parse 2d6+3', () => {
-      expect(parse('2d6+3')).to.deep.equal({count: 2, dieSize: 6, add: 3});
+      expect(parse('2d6+3')).to.deep.equal({count: 2, dieSize: 6, add: 3, multiplier: 1});
     });
 
     it('should parse 2d6', () => {
-      expect(parse('2d6')).to.deep.equal({count: 2, dieSize: 6, add: 0});
+      expect(parse('2d6')).to.deep.equal({count: 2, dieSize: 6, add: 0, multiplier: 1});
     });
 
     it('should parse d12+10', () => {
-      expect(parse('d12+10')).to.deep.equal({count: 1, dieSize: 12, add: 10});
+      expect(parse('d12+10')).to.deep.equal({count: 1, dieSize: 12, add: 10, multiplier: 1});
     });
 
     it('should parse 1d4-1', () => {
-      expect(parse('1d4-1')).to.deep.equal({count: 1, dieSize: 4, add: -1});
+      expect(parse('1d4-1')).to.deep.equal({count: 1, dieSize: 4, add: -1, multiplier: 1});
+    });
+
+    it('should parse 1d6*100', () => {
+      expect(parse('1d6*100')).to.deep.equal({count: 1, dieSize: 6, add: 0, multiplier: 100});
     });
   });
 
@@ -37,11 +41,27 @@ describe('dice', () => {
     });
 
     it('should return all numbers', () => {
-      var found = [false, false, false, false];
+      var found = {};
       for (let i = 0; i < 100; i++) {
         found[roll('1d4-1')] = true;
       }
-      expect(found).to.deep.equal([true, true, true, true]);
+      expect(found).to.have.keys([0, 1, 2, 3].map(i => i.toString()));
+    });
+
+    it('should multiply when given a multiplier', () => {
+      let found = {};
+      for (let i = 0; i < 100; i++) {
+        found[roll('1d6*100')] = true;
+      }
+      expect(found).to.have.keys([100, 200, 300, 400, 500, 600].map(i => i.toString()));
+    });
+
+    it('should add and then multiple', () => {
+      let found = {};
+      for (let i = 0; i < 100; i++) {
+        found[roll('1d4+1*10')] = true;
+      }
+      expect(found).to.have.keys([20, 30, 40, 50].map(i => i.toString()));
     });
   });
 
@@ -56,6 +76,14 @@ describe('dice', () => {
 
     it('should not validate asdf', () => {
       expect(isValid('asdf')).to.equal(false);
+    });
+
+    it('should validate 1d6*100', () => {
+      expect(isValid('1d6*100')).to.equal(true);
+    });
+
+    it('should validate 2d4+8*16', () => {
+      expect(isValid('2d4+8*16')).to.equal(true);
     });
   });
 });
