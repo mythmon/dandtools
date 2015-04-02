@@ -18,12 +18,16 @@ gulp.task('bundle.js', function() {
     .pipe(source('bundle.js'))
     .pipe(buffer())
     .pipe(gulp.dest('./build/'))
-    .pipe(connect.reload());
 });
 
 gulp.task('copy', function() {
   return gulp.src(['./src/**/*.html', './src/**/*.css'])
     .pipe(gulp.dest('./build/'));
+});
+
+gulp.task('reload', function() {
+  return gulp.src('./src/**/*')
+    .pipe(connect.reload());
 });
 
 gulp.task('connect', function() {
@@ -35,7 +39,7 @@ gulp.task('connect', function() {
 });
 
 gulp.task('watch', ['default'], function() {
-  return gulp.watch('./src/**/*', ['default']);
+  return gulp.watch('./src/**/*', ['default', 'reload']);
 });
 
 gulp.task('dev', ['watch', 'connect']);

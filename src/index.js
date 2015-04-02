@@ -7,6 +7,7 @@ class Main extends React.Component {
     return (
       <div className="Container">
         <DiceRoller/>
+        <DiceRoller/>
       </div>
     );
   }
@@ -16,30 +17,37 @@ class DiceRoller extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      dieSpec: '1d6+1',
-      output: '',
+      diceSpec: '1d6+1',
+      results: [],
     };
   }
 
   handleTyping(ev) {
     this.setState({
-      dieSpec: ev.target.value,
+      diceSpec: ev.target.value,
     });
   }
 
   roll() {
-    this.setState({
-      output: dice.roll(this.state.dieSpec),
-    });
+    let {results} = this.state;
+    let roll = dice.roll(this.state.diceSpec);
+    results = [roll].concat(results).slice(0, 10);
+    this.setState({results});
   }
 
   render() {
-    var valid = dice.isValid(this.state.dieSpec);
+    var valid = dice.isValid(this.state.diceSpec);
     return (
-      <section className="DiceRoler">
-        <input type="text" value={this.state.dieSpec} onChange={this.handleTyping.bind(this)}/>
-        <span className="text-center">{this.state.output}</span>
-        <button className="btn" onClick={this.roll.bind(this)} disabled={!valid}>Roll</button>
+      <section className="DiceRoller">
+        <div className="row">
+          <input className="DiceRoller__input" type="text" value={this.state.diceSpec} onChange={this.handleTyping.bind(this)}/>
+          <button onClick={this.roll.bind(this)} disabled={!valid}>Roll</button>
+        </div>
+        <div className="row">
+          <span className="DiceRoller__output">
+            Results: {this.state.results.join(', ')}
+          </span>
+        </div>
       </section>
     );
   }
