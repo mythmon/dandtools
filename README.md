@@ -1,6 +1,7 @@
+# D&D Tools
 Tools for playing and running D&D, because I'm lazy.
 
-To make it go:
+# To make it go
 
 ```shell
 # Install build tools
@@ -15,3 +16,14 @@ live-reload. All the files that are actually loaded in the browser are in
 `src/`, and get compiled into `build/`, which is where the browser loads them.
 `.js` files in src can use ES6 features, including modules, and will be
 compiled to ES5.
+
+# Tests
+
+```shell
+# Run the tests
+$ npm test
+# Lint check
+$ npm run-script lint
+```
+
+Everything should pass the tests and the linter.
