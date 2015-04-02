@@ -31,6 +31,4 @@ Everything should pass the tests and the linter.
 # Useful Resources
 
 * [React docs](https://facebook.github.io/react/docs/getting-started.html)
-* [Bootstrap docs](http://getbootstrap.com/css/)
-* [React Bootstrap Components](http://react-bootstrap.github.io/components.html)
 * [ES6 Features](https://github.com/lukehoban/es6features)

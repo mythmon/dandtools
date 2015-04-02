@@ -1,23 +1,13 @@
 import React from 'react';
 import * as dice from './dice';
-import bs from 'react-bootstrap';
 
 
 class Main extends React.Component {
   render() {
     return (
-      <bs.Grid>
-        <bs.Row>
-          <bs.Col md={12}>
-            <h3>D&D Tools</h3>
-          </bs.Col>
-        </bs.Row>
-        <bs.Row>
-          <bs.Col md={4}>
-            <DiceRoller/>
-          </bs.Col>
-        </bs.Row>
-      </bs.Grid>
+      <div className="Container">
+        <DiceRoller/>
+      </div>
     );
   }
 }
@@ -46,15 +36,13 @@ class DiceRoller extends React.Component {
   render() {
     var valid = dice.isValid(this.state.dieSpec);
     return (
-      <bs.Panel>
+      <section className="DiceRoler">
         <input type="text" value={this.state.dieSpec} onChange={this.handleTyping.bind(this)}/>
-        <span>{this.state.output}</span>
-        <button onClick={this.roll.bind(this)} disabled={!valid}>Roll</button>
-      </bs.Panel>
+        <span className="text-center">{this.state.output}</span>
+        <button className="btn" onClick={this.roll.bind(this)} disabled={!valid}>Roll</button>
+      </section>
     );
   }
 }
 
-var target = document.createElement('div');
-document.body.appendChild(target);
-React.render(<Main/>, target);
+React.render(<Main/>, document.body);

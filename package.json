@@ -25,9 +25,6 @@
     "lint": "eslint src/ test/ gulpfile.js"
   },
   "dependencies": {
-    "bootstrap": "^3.3.4",
-    "jquery": "^2.1.3",
-    "react": "^0.13.1",
-    "react-bootstrap": "^0.20.0"
+    "react": "^0.13.1"
   }
 }
