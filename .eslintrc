@@ -29,6 +29,7 @@ rules:
   no-unused-vars: false
   no-var: true
   comma-dangle: false
+  new-cap: false
 
 env:
   es6: true

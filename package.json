@@ -25,6 +25,8 @@
     "lint": "eslint src/ test/ gulpfile.js"
   },
   "dependencies": {
+    "flux": "^2.0.1",
+    "immutable": "^3.7.1",
     "react": "^0.13.1"
   }
 }
