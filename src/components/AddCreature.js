@@ -1,15 +1,17 @@
 import React from 'react';
 
+import BaseSection from './BaseSection';
 import * as StatusActions from '../actions/Status';
 
 
-export default class AddCreature extends React.Component {
+export default class AddCreature extends BaseSection {
   constructor(props) {
-    super(props);
-    this.state = {
+    super(props, {
       name: '',
       hp: '1d10',
-    };
+    });
+    this.title = 'Add Creature';
+    this.className = 'AddCreature';
   }
 
   handleChange(ev) {
@@ -32,26 +34,21 @@ export default class AddCreature extends React.Component {
     StatusActions.addCreature(opts);
   }
 
-  render() {
+  renderBody() {
     return (
-      <div className="Section AddCreature">
-        <div className="Section__title">
-          Add Creature
-          <button className="Section__close small" onClick={() => this.props.remove(this)}>X</button>
+      <div>
+        <div className="row">
+          <label>Name</label>
+          <input type="text" name="name" value={this.state.name} onChange={this.handleChange.bind(this)}/>
         </div>
 
-        <div className="Section__body">
-          <row>
-            <label>Name</label>
-            <input type="text" name="name" value={this.state.name} onChange={this.handleChange.bind(this)}/>
-          </row>
-          <row>
-            <label>HP</label>
-            <input type="text" name="hp" value={this.state.hp} onChange={this.handleChange.bind(this)}/>
-          </row>
-          <row>
-            <button onClick={this.submit.bind(this)}>Add</button>
-          </row>
+        <div className="row">
+          <label>HP</label>
+          <input type="text" name="hp" value={this.state.hp} onChange={this.handleChange.bind(this)}/>
+        </div>
+
+        <div className="row">
+          <button onClick={this.submit.bind(this)}>Add</button>
         </div>
       </div>
     );

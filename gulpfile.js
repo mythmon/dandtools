@@ -14,10 +14,10 @@ gulp.task('bundle.js', function() {
     })
     .transform(babelify)
     .bundle()
-    .on('error', function(err) { gutil.log('Browserify error', err.loc, err.filename); })
+    .on('error', function(err) { gutil.log('Browserify error', err.toString()); })
     .pipe(source('bundle.js'))
     .pipe(buffer())
-    .pipe(gulp.dest('./build/'))
+    .pipe(gulp.dest('./build/'));
 });
 
 gulp.task('copy', function() {

@@ -10,11 +10,12 @@ body {
 
 .Section {
   box-sizing: border-box;
-  width: 48%;
-  margin: 0.5%;
+  width: 32%;
+  margin: 0 0.5% 15px;
 }
 
-.Section__title {
+.Section__title,
+.Section__title--minimized {
   background: #aaa;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
@@ -22,7 +23,11 @@ body {
   font-size: 0.8em;
 }
 
-.Section__title .Section__close {
+.Section__title--minimized {
+  border-radius: 4px;
+}
+
+.Section__title__actions {
   float: right;
 }
 

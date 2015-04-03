@@ -3,7 +3,9 @@ import {Dispatcher} from 'flux';
 
 import * as dice from './dice';
 import {getId} from './utils';
+
 import AddCreature from './components/AddCreature.js';
+import DiceRoller from './components/DiceRoller';
 import StatusTracker from './components/StatusTracker.js';
 
 
@@ -62,63 +64,18 @@ class Selector extends React.Component {
 
         <div className="Selector__active">
           {this.state.components.map(([id, componentName]) => {
+            var Component;
             if (componentName === 'DiceRoller') {
-              return <DiceRoller key={id} remove={this.removeComponent.bind(this, id)}/>;
+              Component = DiceRoller;
             } else if (componentName === 'AddCreature') {
-              return <AddCreature key={id} remove={this.removeComponent.bind(this, id)}/>;
+              Component = AddCreature;
             } else if (componentName === 'StatusTracker') {
-              return <StatusTracker key={id} remove={this.removeComponent.bind(this, id)}/>;
+              Component = StatusTracker;
             } else {
               throw `Unknown component ${componentName}`;
             }
+            return <Component key={id} remove={this.removeComponent.bind(this, id)}/>;
           })}
-        </div>
-      </div>
-    );
-  }
-}
-
-
-class DiceRoller extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      diceSpec: '1d6+1',
-      results: [],
-    };
-  }
-
-  handleTyping(ev) {
-    this.setState({
-      diceSpec: ev.target.value,
-    });
-  }
-
-  roll() {
-    let {results} = this.state;
-    let roll = dice.roll(this.state.diceSpec);
-    results = [roll].concat(results).slice(0, 10);
-    this.setState({results});
-  }
-
-  render() {
-    var valid = dice.isValid(this.state.diceSpec);
-    return (
-      <div className="Section DiceRoller">
-        <div className="Section__title">
-          Dice Roller
-          <button className="Section__close small" onClick={() => this.props.remove(this)}>X</button>
-        </div>
-        <div className="Section__body">
-          <div className="row">
-            <input className="DiceRoller__input" type="text" value={this.state.diceSpec} onChange={this.handleTyping.bind(this)}/>
-            <button onClick={this.roll.bind(this)} disabled={!valid}>Roll</button>
-          </div>
-          <div className="row">
-            <span className="DiceRoller__output">
-              Results: {this.state.results.join(', ')}
-            </span>
-          </div>
         </div>
       </div>
     );

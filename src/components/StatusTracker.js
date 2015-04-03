@@ -1,14 +1,17 @@
 import React from 'react';
+import _ from 'lodash';
 
 import StatusStore from '../stores/Status';
+import BaseSection from './BaseSection';
 
 
-export default class StatusTracker extends React.Component {
+export default class StatusTracker extends BaseSection {
   constructor(props) {
-    super(props);
-    this.state = {
+    super(props, {
       statuses: StatusStore.getStatuses(),
-    };
+    });
+    this.title = 'Status Tracker';
+    this.className = 'StatusTracker';
   }
 
   componentDidMount() {
@@ -25,20 +28,14 @@ export default class StatusTracker extends React.Component {
     });
   }
 
-  render() {
+  renderBody() {
     return (
-      <div className="Section StatusTracker">
-        <div className="Section__title">
-          Status Tracker
-          <button className="Section__close small" onClick={() => this.props.remove(this)}>X</button>
-        </div>
-        <div className="Section__body">
-          <ul>
-            {this.state.statuses.map((status, i) => (
-              <StatusLine {...status} key={`status-${i}`}/>
-            ))}
-          </ul>
-        </div>
+      <div>
+        <ul>
+          {this.state.statuses.map((status, i) => (
+            <StatusLine {...status} key={`status-${i}`}/>
+          ))}
+        </ul>
       </div>
     );
   }
